@@ -10,6 +10,12 @@ export const Container = styled.div`
     flex-direction: column;
     background-color: #112131;
     position: relative;
+    transition: all 1s;
+
+    :hover {
+        cursor: pointer;
+        scale: 1.1;
+    }
 
     h1 {
         font-size: 20px;
@@ -21,9 +27,5 @@ export const Container = styled.div`
         top: 32px;
         right: 32px;
         font-size: 14px;
-    }
-    
-    :hover {
-        cursor: pointer;
     }
 `

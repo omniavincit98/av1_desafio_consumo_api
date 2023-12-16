@@ -1,14 +1,14 @@
 import { Container } from "./styles"
 
-export function Post() {
+export function Post(props) {
     return (
         <Container>
-            <h1>JavaScript data types and data structures</h1>
+            <h1>{props.title}</h1>
             <p>
-                Programming languages all have built-in data structures, but these often differ from one language to another. This article attempts to list the built-in data structures available in...
+                {props.body}
             </p>
             <span>
-                Há 1 dia
+                {props.date}
             </span>
         </Container>
     )

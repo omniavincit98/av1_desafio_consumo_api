@@ -20,8 +20,6 @@ export function User() {
         loadData()
     }, [])
 
-    data ? console.log(data) : null
-
     return (
         <Container>
             {data && (

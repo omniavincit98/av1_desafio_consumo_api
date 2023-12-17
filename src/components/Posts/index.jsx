@@ -1,47 +1,68 @@
 import { useEffect, useState } from 'react'
 import { Post } from '../Post'
-import { Container } from "./styles"
+import { ListPosts } from './posts.js'
+import { Search } from './search'
+import loadCountPost from '../../services/loadCountPost.js'
+import loadPosts from '../../services/loadPosts.js'
+import loadSearch from '../../services/loadSearch.js'
+import { Modal } from '../Modal/index.jsx'
 
 export function Posts() {
-    const [data, setData] = useState()
+    const [listPosts, setListPosts] = useState()
+    const [showPosts, setShowPosts] = useState()
+    const [search, setSearch] = useState()
+    const [countPost, setCountPost] = useState()
+    const [selectedPost, setSelectedPost] = useState(null)
 
     useEffect(() => {
-        async function loadData() {
-            const response = await fetch(`https://api.github.com/repos/omniavincit98/av1_desafio_consumo_api/issues`).then(response => response.json())
-            response.forEach(element => {
-                element.body = element.body.substr(0, 300) + '...'
-                const date = new Date(element.created_at)
-                const today = new Date()
-                const year = today.getFullYear() - date.getFullYear()
-                const month = today.getMonth() - date.getMonth()
-                const day = today.getDate() - date.getDate()
-                if (year > 1) {
-                    element.created_at = `Há ${year} anos`
-                } else if (year == 1) {
-                    element.created_at = `Há ${year} ano`
-                } else if (month > 1) {
-                    element.created_at = `Há ${month} meses`
-                } else if (month == 1) {
-                    element.created_at = `Há ${month} mês`
-                } else if (day > 1) {
-                    element.created_at = `Há ${day} dias`
-                } else if (day == 1) {
-                    element.created_at = `Há ${day} dia`
-                } else {
-                    element.created_at = `Hoje`
-                }
-            })
-            setData(response)
-        }
-
-        loadData()
+        loadCountPost(setCountPost)
+        loadPosts(setListPosts, setShowPosts)
     }, [])
 
+    useEffect(() => {
+        loadSearch(search, listPosts, setShowPosts)
+    }, [search])
+
+    const openPost = (post) => {
+        setSelectedPost(post)
+    }
+
+    const closePost = () => {
+        setSelectedPost(null)
+    }
+
     return (
-        <Container>
-            {data && data.map(issue => (
-                <Post key={issue.id} body={issue.body} title={issue.title} date={issue.created_at} />
-            ))}
-        </Container>
+        <>
+            <Search>
+                <h1>Publicações</h1>
+                <input
+                    type="search"
+                    name="issues"
+                    id="issues"
+                    placeholder="Buscar conteúdo"
+                    onChange={(e) => setSearch(e.target.value)}
+                />
+                <div id="countPost">{countPost}</div>
+            </Search>
+            <ListPosts>
+                {showPosts &&
+                    showPosts.map((issue) => (
+                        <Post
+                            key={issue.id}
+                            body={issue.body}
+                            title={issue.title}
+                            date={issue.created_at}
+                            onClick={() => openPost(issue)}
+                        />
+                    ))}
+            </ListPosts>
+            {selectedPost && (
+                <Modal onClose={closePost}>
+                    <h1>{selectedPost.title}</h1>
+                    <p>{selectedPost.entireBody}</p>
+                    <span>{selectedPost.date}</span>
+                </Modal>
+            )}
+        </>
     )
 }

@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const Container = styled.div`
+export const ListPosts = styled.div`
     width: 864px;
     margin: 3em 0;
     display: grid;

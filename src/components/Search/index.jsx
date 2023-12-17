@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react"
 import { Container } from "./styles"
+import { Posts } from "../Posts"
 
-export function Search() {
+export function Search(props) {
     const [data, setData] = useState()
 
     useEffect(() => {
@@ -14,12 +15,16 @@ export function Search() {
     }, [])
 
     return (
-        <Container>
-            <h1>Publicações</h1>
-            <input type="search" name="issues" id="issues" placeholder="Buscar conteúdo" onChange={e => setData(e.target.value)} />
-            <div id="countPost">
-                {data}
-            </div>
-        </Container>
+        <>
+            <Container>
+                <h1>Publicações</h1>
+                <input type="search" name="issues" id="issues" placeholder="Buscar conteúdo" onChange={e => setData(e.target.value)} />
+                <div id="countPost">
+                    {data}
+                </div>
+            </Container>
+            <Posts />
+        </>
+
     )
 }

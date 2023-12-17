@@ -5,7 +5,7 @@ import { FaBuilding } from "react-icons/fa6"
 import { MdPeopleAlt } from "react-icons/md"
 import { Container } from "./styles"
 
-const github = "brunobandeiraf"
+const github = "omniavincit98"
 
 export function User() {
     const [data, setData] = useState()
@@ -13,7 +13,7 @@ export function User() {
     useEffect(() => {
         async function loadData() {
             const response = await fetch(`https://api.github.com/users/${github}`).then(response => response.json())
-            response.bio = response.bio.substr(0, 100)
+            response.bio ? response.bio = response.bio.substr(0, 100) : null
             setData(response)
         }
 
@@ -27,7 +27,7 @@ export function User() {
                     <img src={data.avatar_url} alt="" />
                     <div id="data">
                         <h1>{data.name}</h1>
-                        <p>{data.bio}</p>
+                        {data.bio ? <p>{data.bio}</p> : null}
                         <div id="socialmedia">
                             <div>
                                 <FaGithub />

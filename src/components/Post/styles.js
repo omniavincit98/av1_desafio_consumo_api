@@ -10,9 +10,9 @@ export const Container = styled.div`
     flex-direction: column;
     background-color: #112131;
     position: relative;
-    transition: all 1s;
+    transition: all .5s;
 
-    :hover {
+    &:hover {
         cursor: pointer;
         scale: 1.1;
     }

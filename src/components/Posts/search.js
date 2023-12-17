@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const Container = styled.div`
+export const Search = styled.div`
     position: relative;
     margin-top: 2em;
     width: 864px;

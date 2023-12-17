@@ -1,15 +1,11 @@
-import { Container } from "./styles"
+import { Container } from './styles';
 
 export function Post(props) {
     return (
-        <Container>
+        <Container onClick={props.onClick}>
             <h1>{props.title}</h1>
-            <p>
-                {props.body}
-            </p>
-            <span>
-                {props.date}
-            </span>
+            <p>{props.body}</p>
+            <span>{props.date}</span>
         </Container>
-    )
+    );
 }
